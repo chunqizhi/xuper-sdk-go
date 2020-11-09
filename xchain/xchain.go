@@ -473,11 +473,16 @@ func (xc *Xchain) GenRealTxOnly(response *pb.PreExecWithSelectUTXOResponse, hdPu
 	//		}
 	//	}
 
+
 	utxoOutput := &pb.UtxoOutput{
 		//		UtxoList: utxolist,
 		//		TotalSelected: totalSelected.String(),
-		UtxoList:      response.UtxoOutput.UtxoList,
-		TotalSelected: response.UtxoOutput.TotalSelected,
+		//UtxoList:      response.UtxoOutput.UtxoList,
+		TotalSelected: "0",
+	}
+	if response.UtxoOutput != nil {
+		utxoOutput.UtxoList = response.UtxoOutput.UtxoList
+		utxoOutput.TotalSelected = response.UtxoOutput.TotalSelected
 	}
 	totalNeed := big.NewInt(0)
 	amount, ok := big.NewInt(0).SetString(xc.TotalToAmount, 10)
@@ -491,7 +496,7 @@ func (xc *Xchain) GenRealTxOnly(response *pb.PreExecWithSelectUTXOResponse, hdPu
 	amount.Add(amount, fee)
 	totalNeed.Add(totalNeed, amount)
 
-	totalSelected, ok := big.NewInt(0).SetString(response.UtxoOutput.TotalSelected, 10)
+	totalSelected, ok := big.NewInt(0).SetString(utxoOutput.TotalSelected, 10)
 	if !ok {
 		return nil, common.ErrInvalidAmount
 	}
