@@ -25,6 +25,7 @@ type CommConfig struct {
 	ComplianceCheck    ComplianceCheckConfig `yaml:"complianceCheck,omitempty"`
 	MinNewChainAmount  string                `yaml:"minNewChainAmount,omitempty"`
 	Crypto             string                `yaml:"crypto,omitempty"`
+	NoFee              bool                  `yaml:"noFee,omitempty"`
 }
 
 const confPath = "./conf"
@@ -53,6 +54,7 @@ func GetConfig(configPath string, confName string) *CommConfig {
 		},
 		MinNewChainAmount: "100",
 		Crypto:            CRYPTO_XCHAIN,
+		NoFee: false,
 	}
 
 	filename := configPath + "/" + confName
@@ -80,6 +82,7 @@ func SetConfig(checkHost, checkAddr, checkFeeAddr, checkFee string, isNeedCheck,
 		},
 		MinNewChainAmount: "100",
 		Crypto:            CRYPTO_XCHAIN,
+		NoFee: false,
 	}
 	if checkHost != "" {
 		commConfig.EndorseServiceHost = checkHost
