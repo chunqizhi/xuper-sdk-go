@@ -54,7 +54,7 @@ func GetConfig(configPath string, confName string) *CommConfig {
 		},
 		MinNewChainAmount: "100",
 		Crypto:            CRYPTO_XCHAIN,
-		NoFee: false,
+		NoFee:             false,
 	}
 
 	filename := configPath + "/" + confName
@@ -82,7 +82,7 @@ func SetConfig(checkHost, checkAddr, checkFeeAddr, checkFee string, isNeedCheck,
 		},
 		MinNewChainAmount: "100",
 		Crypto:            CRYPTO_XCHAIN,
-		NoFee: false,
+		NoFee:             false,
 	}
 	if checkHost != "" {
 		commConfig.EndorseServiceHost = checkHost

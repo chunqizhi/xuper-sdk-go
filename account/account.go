@@ -79,14 +79,37 @@ func CreateAndSaveAccountToFile(path, passwd string, strength uint8, language in
 	return account, nil
 }
 
-// GetAccountFromFile get an account from file
-func GetAccountFromFile(path, passwd string) (*Account, error) {
+// GetAccountFromFileByPassword get an account from file
+func GetAccountFromFileByPassword(path, passwd string) (*Account, error) {
 	cryptoClient := crypto.GetCryptoClient()
 	ecdsaPrivateKey, err := cryptoClient.GetEcdsaPrivateKeyFromFileByPassword(path, passwd)
 	if err != nil {
 		return nil, err
 	}
 
+	account := &Account{}
+	account.PrivateKey, err = cryptoClient.GetEcdsaPrivateKeyJsonFormatStr(ecdsaPrivateKey)
+	if err != nil {
+		return nil, err
+	}
+	account.PublicKey, err = cryptoClient.GetEcdsaPublicKeyJsonFormatStr(ecdsaPrivateKey)
+	if err != nil {
+		return nil, err
+	}
+	account.Address, err = cryptoClient.GetAddressFromPublicKey(&ecdsaPrivateKey.PublicKey)
+	if err != nil {
+		return nil, err
+	}
+	return account, err
+}
+
+// 从导出的私钥文件读取私钥
+func GetAccountFromFile(filename string) (*Account, error) {
+	cryptoClient := crypto.GetCryptoClient()
+	ecdsaPrivateKey, err := cryptoClient.GetEcdsaPrivateKeyFromFile(filename)
+	if err != nil {
+		return nil, err
+	}
 	account := &Account{}
 	account.PrivateKey, err = cryptoClient.GetEcdsaPrivateKeyJsonFormatStr(ecdsaPrivateKey)
 	if err != nil {

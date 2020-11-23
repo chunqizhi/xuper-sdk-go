@@ -122,7 +122,7 @@ func TestGetAccountFromFile(t *testing.T) {
 	}
 
 	for _, arg := range testCase {
-		acc, err := GetAccountFromFile(arg.path, arg.passwd)
+		acc, err := GetAccountFromFileByPassword(arg.path, arg.passwd)
 		t.Logf("GetAccountFromFile: %v, err: %v", acc, err)
 	}
 }

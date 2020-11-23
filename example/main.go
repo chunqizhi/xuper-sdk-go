@@ -51,7 +51,7 @@ func testAccount() {
 	fmt.Printf("CreateAndSaveAccountToFile: %v\n", acc)
 
 	// get the account from file, using password decrypt
-	acc, err = account.GetAccountFromFile("keys/", "123")
+	acc, err = account.GetAccountFromFileByPassword("keys/", "123")
 	if err != nil {
 		fmt.Printf("getAccountFromFile err: %v\n", err)
 	}
